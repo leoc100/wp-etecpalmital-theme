@@ -1,0 +1,10 @@
+.navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+@media (max-width: 1200px) {
+    .btn, .btn-group {
+        width:100%;
+    }
+}
