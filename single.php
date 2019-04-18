@@ -12,7 +12,7 @@
         <?php get_header() ?>
         
         <div class="container">
-            <?= the_thumbnail ?>
+            <?= get_the_post_thumbnail() ?>
             <h1><?= the_title() ?></h1>
             <?= the_content() ?>
         </div>
