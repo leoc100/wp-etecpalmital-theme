@@ -12,8 +12,13 @@
         <?php get_header() ?>
         <div class="container">
             <?php while ( have_posts() ) : the_post() ?>
-            <h1><?= the_title() ?></h1>
-            <?= the_content() ?>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><a href="<?= the_permalink() ?>"><?= the_title() ?></a></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><?= get_the_date( 'd \d\e F  \d\e Y' ) ?> - <?= get_the_time('H:i:s') ?></h6>
+                    <div class="card-text"><?= the_excerpt() ?></div>
+                </div>
+            </div>
             <?php endwhile; ?>
         </div>
         <?= get_footer() ?>
