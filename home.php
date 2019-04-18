@@ -1,6 +1,6 @@
 <?php
 $slider_posts = [];
-$query_slider_fixed = new WP_Query(['posts_per_page'=>7, 'tag' => 'slider-fixed']);
+$query_slider_fixed = new WP_Query(['posts_per_page' => 7, 'tag' => 'slider-fixed']);
 $slider_fixed_ids = [];
 while($query_slider_fixed->have_posts()) {
   $query_slider_fixed->the_post();
@@ -13,9 +13,10 @@ while($query_slider_fixed->have_posts()) {
   wp_reset_postdata();
 }
 if(count($slider_posts) < 7) {
-  $query_slider = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_page'=> (7 - count($slider_posts)) , 'tag' => 'slider']);
+  $query_slider = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_page' => (7 - count($slider_posts)) , 'tag' => 'slider']);
   while($query_slider->have_posts()) {
     $query_slider->the_post();
+    $slider_fixed_ids[] = get_the_ID();
     $slider_posts[] = [
       'url' => get_permalink(),
       'image' => get_the_post_thumbnail_url(),
@@ -24,6 +25,7 @@ if(count($slider_posts) < 7) {
     wp_reset_postdata();
   }
 }
+$etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_page' => 4, 'category_name' => 'noticias']);
 ?>
 <!doctype html>
 <html>
@@ -70,55 +72,64 @@ if(count($slider_posts) < 7) {
                         <img src="<?= get_template_directory_uri() ?>/img/moodle.png" />
                     </div>
                     <div class="col-sm text-center">
-                        <img src="<?= get_template_directory_uri() ?>/img/nsa.png" />
+                        <a target="_blank" href="https://nsa.cps.sp.gov.br"><img src="<?= get_template_directory_uri() ?>/img/nsa.png" /></a>
                     </div>
                     <div class="col-sm text-center">
-                        <img src="<?= get_template_directory_uri() ?>/img/outlook.png" />
+                        <a target="_blank" href="https://portal.office.com"><img src="<?= get_template_directory_uri() ?>/img/outlook.png" /></a>
                     </div>
                     <div class="col-sm text-center">
-                        <img src="<?= get_template_directory_uri() ?>/img/imagine.png" />
+                        <a target="_blank" href="https://etec.onthehub.com/"><img src="<?= get_template_directory_uri() ?>/img/imagine.png" /></a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container">
             <h1 class="text-center">Cursos Oferecidos</h1>
-        </div>
-        <div class="row">
-            <?php foreach(get_categories(['child_of' => get_category_by_slug('cursos')->term_id]) as $category): ?>
-            <div class="col-sm text-center">
-                <h2><?= $category->name ?></h2>
-                <ul>
-                <?php foreach(get_posts(['category_name' => $category->name]) as $post): setup_postdata($post) ?>
-                <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
-                <?php wp_reset_postdata(); ?>
+            <div class="row">
+                <?php foreach(get_categories(['child_of' => get_category_by_slug('cursos')->term_id]) as $category): ?>
+                <div class="col-sm text-center">
+                    <h2><?= $category->name ?></h2>
+                    <ul>
+                    <?php foreach(get_posts(['category_name' => $category->name, 'orderby' => 'title', 'order' => 'ASC']) as $post): setup_postdata($post) ?>
+                    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+                    <?php wp_reset_postdata(); ?>
+                    <?php endforeach ?>
+                    </ul>
+                </div>
                 <?php endforeach ?>
-                </ul>
+            
+                <!-- <div class="col-sm text-center">
+                    <h2>Ensino Técnico Integrado ao Médio (Integral)</h2>
+                    <ul>
+                        <li><a href="/etim-administracao">Administração</a></li>
+                        <li><a href="/etim-informatica-para-internet">Informática para Internet</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm text-center">
+                    <h2>Ensino Técnico (Noturno)</h2>
+                    <ul>
+                        <li><a href="/contabilidade">Contabilidade<a></li>
+                        <li><a href="/desenvolvimento-de-sistemas">Desenvolvimento de Sistemas</a></li>
+                        <li><a href="/enfermagem">Enfermagem</a></li>
+                        <li><a href="/informatica-para-internet">Informática para Internet</a></li>
+                        <li><a href="/recursos-humanos">Recursos Humanos</a></li>
+                        <li><a href="/servicos-juridicos">Serviços Jurídicos</a></li>
+                    </ul>
+                </div> -->
             </div>
-            <?php endforeach ?>
-        
-            <!-- <div class="col-sm text-center">
-                <h2>Ensino Técnico Integrado ao Médio (Integral)</h2>
-                <ul>
-                    <li><a href="/etim-administracao">Administração</a></li>
-                    <li><a href="/etim-informatica-para-internet">Informática para Internet</a></li>
-                </ul>
-            </div>
-            <div class="col-sm text-center">
-                <h2>Ensino Técnico (Noturno)</h2>
-                <ul>
-                    <li><a href="/contabilidade">Contabilidade<a></li>
-                    <li><a href="/desenvolvimento-de-sistemas">Desenvolvimento de Sistemas</a></li>
-                    <li><a href="/enfermagem">Enfermagem</a></li>
-                    <li><a href="/informatica-para-internet">Informática para Internet</a></li>
-                    <li><a href="/recursos-humanos">Recursos Humanos</a></li>
-                    <li><a href="/servicos-juridicos">Serviços Jurídicos</a></li>
-                </ul>
-            </div> -->
         </div>
         <div class="text-light bg-dark">
             <h1 class="text-center">ETEC News</h1>
-            <br><br><br><br>
+            <div class="container">
+                <div class="row">
+                <?php while($etecnews_posts->have_posts()): $etecnews_posts->the_post(); ?>
+                    <div class="col-sm text-center">
+                        <h2><?= get_the_title() ?></h2>
+                        <?= get_the_content() ?>
+                    </div>
+                <?php wp_reset_postdata(); endwhile ?>
+                </div>
+            </div>
         </div>
 
         <?= get_footer() ?>
