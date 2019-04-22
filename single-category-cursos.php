@@ -15,7 +15,6 @@
         <div class="container">
             <img class="d-block w-100" src="<?= get_the_post_thumbnail_url() ?>" />
             <h1><?= the_title() ?></h1>
-            <h6 class="card-subtitle mb-2 text-muted date-time">Publicado em <?= get_the_date( 'd \d\e F  \d\e Y' ) ?> - <?= get_the_time('H:i:s') ?></h6>
             <div class="card">
                 <div class="card-body">
                 <?= the_content() ?>

@@ -19,7 +19,7 @@
     </nav>
     <img class="mx-auto d-none d-lg-block d-xl-block" src="<?= get_template_directory_uri() ?>/img/header-1000.png" />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/" aria-expanded="false"><img src="<?= get_template_directory_uri() ?>/img/logo-etec.png" height="48px" /></a>
+        <a class="navbar-brand" href="<?= get_home_url() ?>" aria-expanded="false"><img src="<?= get_template_directory_uri() ?>/img/logo-etec.png" height="48px" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -59,13 +59,13 @@
             </div>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="/projetos">Projetos</a>
+            <a class="nav-link" href="<?= get_permalink(get_page_by_path("projetos")) ?>">Projetos</a>
             </li>
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown-mercado" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mercado de Trabalho</a>
             <div class="dropdown-menu" aria-labelledby="dropdown-mercado">
                 <a class="dropdown-item" href="<?= get_permalink(get_page_by_path("cursos-online")) ?>">Cursos On-Line</a>
-                <a class="dropdown-item" href="/teste-vocacional">Teste Vocacional</a>
+                <a class="dropdown-item" target="__blank" href="http://auth.guiadoestudante.abril.com.br/?u=http%3A%2F%2Ftestevocacional.guiadoestudante.abril.com.br%2F">Teste Vocacional</a>
                 <a class="dropdown-item" href="<?= get_permalink(get_page_by_path("vagas-de-estagio")) ?>">Vagas de Estágio</a>
             </div>
             </li>
