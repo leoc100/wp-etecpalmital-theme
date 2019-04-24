@@ -1,4 +1,5 @@
 <?php
+
 function create_taxonomy_link() {
     $args = array(
       'public' => true,
@@ -15,7 +16,7 @@ function url_meta_box_form() {
 	// Nonce field to validate form request came from current site
 	wp_nonce_field( basename( __FILE__ ), 'url_fields' );
 	// Get the location data if it's already been entered
-	$location = get_post_meta( $post->ID, 'url', true );
+	$url = get_post_meta( $post->ID, 'url', true );
 	// Output the field
 	echo '<input type="text" name="url" value="' . esc_textarea( $url )  . '" class="widefat">';
 }
@@ -26,8 +27,13 @@ function url_meta_box_add() {
 
 }
 
+add_action('save_post', 'save_url_post');
+    
+function save_url_post(){
+    global $post;        
+        update_post_meta($post->ID, 'url', $_POST['url']);
+}
 add_action( 'add_meta_boxes', 'url_meta_box_add' );
-
 
 // function create_taxonomy_link() {
  

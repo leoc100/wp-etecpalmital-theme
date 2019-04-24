@@ -1,26 +1,28 @@
 <?php
 $slider_posts = [];
-$query_slider_fixed = new WP_Query(['posts_per_page' => 7, 'tag' => 'slider-fixed']);
+$query_slider_fixed = new WP_Query(['post_type' => ['post', 'link'], 'posts_per_page' => 7, 'tag' => 'slider-fixed']);
 $slider_fixed_ids = [];
 while($query_slider_fixed->have_posts()) {
   $query_slider_fixed->the_post();
   $slider_fixed_ids[] = get_the_ID();
   $slider_posts[] = [
-    'url' => get_permalink(),
+    'url' => (get_post_type() == 'link') ? get_post_meta(get_the_ID(), 'url', true) : get_permalink(),
     'image' => get_the_post_thumbnail_url(),
-    'title' => get_the_title()
+    'title' => get_the_title(),
+    'type' => get_post_type()
   ];
   wp_reset_postdata();
 }
 if(count($slider_posts) < 7) {
-  $query_slider = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_page' => (7 - count($slider_posts)) , 'tag' => 'slider']);
+  $query_slider = new WP_Query(['post_type' => ['post', 'link'], 'post__not_in' => $slider_fixed_ids, 'posts_per_page' => (7 - count($slider_posts)) , 'tag' => 'slider']);
   while($query_slider->have_posts()) {
     $query_slider->the_post();
     $slider_fixed_ids[] = get_the_ID();
     $slider_posts[] = [
-      'url' => get_permalink(),
+      'url' => (get_post_type() == 'link') ? get_post_meta(get_the_ID(), 'url', true) : get_permalink(),
       'image' => get_the_post_thumbnail_url(),
-      'title' => get_the_title()
+      'title' => get_the_title(),
+      'type' => get_post_type()
     ];
     wp_reset_postdata();
   }
@@ -50,7 +52,7 @@ $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_
             <div class="carousel-inner">
             <?php foreach($slider_posts as $id => $post): ?>
             <div class="carousel-item <?= ($id == 0) ? 'active' : '' ?>">
-                <a href="<?= $post['url'] ?>"><img class="d-block w-100" src="<?= $post['image'] ?>" alt="<?= $post['title'] ?>"></a>
+                <a <?= ($post['type'] == 'link') ? 'target="__blank"' : ''?> href="<?= $post['url'] ?>"><img class="d-block w-100" src="<?= $post['image'] ?>" alt="<?= $post['title'] ?>"></a>
             </div>
             <?php endforeach ?>
             </div>
