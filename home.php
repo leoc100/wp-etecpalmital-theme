@@ -27,6 +27,7 @@ if(count($slider_posts) < 7) {
     wp_reset_postdata();
   }
 }
+$links_uteis = $query_slider = new WP_Query(['post_type' => 'link', 'tag' => 'links-uteis']);
 $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_page' => 4, 'category_name' => 'noticias']);
 ?>
 <!doctype html>
@@ -69,7 +70,16 @@ $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_
         <div class="jumbotron text-light">
             <h1 class="text-center">Links Úteis</h1>
             <div class="container">
-                <div class="row">
+            <div class="row">
+            <?php while($links_uteis->have_posts()): $links_uteis->the_post(); ?>
+                <div class="col-sm text-center">
+                    <a target="_blank" href="<?= get_post_meta(get_the_ID(), 'url', true) ?>">
+                        <img src="<?= get_the_post_thumbnail_url() ?>" />
+                    </a>
+                </div>
+            <?php wp_reset_postdata(); endwhile ?>
+            </div>
+                <!-- <div class="row">
                     <div class="col-sm text-center">
                         <img src="<?= get_template_directory_uri() ?>/img/moodle.png" />
                     </div>
@@ -82,7 +92,7 @@ $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_
                     <div class="col-sm text-center">
                         <a target="_blank" href="https://etec.onthehub.com/"><img src="<?= get_template_directory_uri() ?>/img/imagine.png" /></a>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="container">
