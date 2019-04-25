@@ -6,3 +6,27 @@
 ul {
     list-style: none;
 }
+
+
+.bg-dark .btn-dark {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+.bg-dark .btn-dark a:hover {
+    color: #212529;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}
+
+.link-destaque a, .link-destaque a:link, .link-destaque a:visited, .link-destaque a:active {
+    color: #8b393c;
+    text-decoration: none;
+}
+
+.link-destaque a:hover {
+    color: #866465;
+    text-decoration: none;
+}
+

@@ -28,7 +28,7 @@ if(count($slider_posts) < 7) {
   }
 }
 $links_uteis = $query_slider = new WP_Query(['post_type' => 'link', 'tag' => 'links-uteis']);
-$etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_page' => 4, 'category_name' => 'noticias']);
+$etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_page' => 4, 'category_name' => 'etec-news']);
 ?>
 <!doctype html>
 <html>
@@ -40,6 +40,7 @@ $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_
         <link rel="stylesheet" href="<?= get_template_directory_uri() ?>/css/footer.css" />
         <link rel="stylesheet" href="<?= get_template_directory_uri() ?>/css/header.css" />
         <link rel="stylesheet" href="<?= get_template_directory_uri() ?>/css/home.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     </head>
     <body>
         <?php get_header() ?>
@@ -103,7 +104,7 @@ $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_
                     <h2><?= $category->name ?></h2>
                     <ul>
                     <?php foreach(get_posts(['category_name' => $category->name, 'orderby' => 'title', 'order' => 'ASC']) as $post): setup_postdata($post) ?>
-                    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+                    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a><?php if(has_tag('inscricoes-abertas', $post->ID)): ?> <span class="link-destaque">  <a href="<?= get_permalink(get_page_by_path("inscricoes-abertas")) ?>"><i class="fa fa-caret-left" aria-hidden="true"></i> Inscições Abertas</a></span><?php endif ?></li>
                     <?php wp_reset_postdata(); ?>
                     <?php endforeach ?>
                     </ul>
@@ -135,9 +136,9 @@ $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_
             <div class="container">
                 <div class="row">
                 <?php while($etecnews_posts->have_posts()): $etecnews_posts->the_post(); ?>
-                    <div class="col-sm text-center">
-                        <h2><?= get_the_title() ?></h2>
-                        <?= get_the_content() ?>
+                    <div class="col-sm">
+                        <h2 class="text-center"><?= get_the_title() ?></h2>
+                        <?= get_the_excerpt() ?>
                     </div>
                 <?php wp_reset_postdata(); endwhile ?>
                 </div>
