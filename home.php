@@ -27,6 +27,35 @@ if(count($slider_posts) < 7) {
     wp_reset_postdata();
   }
 }
+if(count($slider_posts) < 7) {
+    $query_images = new WP_Query(['post_type' => 'attachment', 'post_mime_type' => 'image', 'post_status' => 'inherit', 'post__not_in' => $slider_fixed_ids, 'posts_per_page' => (7 - count($slider_posts)) , 'tag' => 'slider-fixed']);
+    while($query_images->have_posts()) {
+      $query_images->the_post();
+      $slider_fixed_ids[] = get_the_ID();
+      $slider_posts[] = [
+        //'url' => wp_get_attachment_url(get_the_ID()),
+        'image' => wp_get_attachment_url(get_the_ID()),
+        //'title' => get_the_title(),
+        'type' => get_post_type()
+      ];
+      wp_reset_postdata();
+    }
+}
+if(count($slider_posts) < 7) {
+    $query_images = new WP_Query(['post_type' => 'attachment', 'post_mime_type' => 'image', 'post_status' => 'inherit', 'post__not_in' => $slider_fixed_ids, 'posts_per_page' => (7 - count($slider_posts)) , 'tag' => 'slider']);
+    while($query_images->have_posts()) {
+      $query_images->the_post();
+      $slider_fixed_ids[] = get_the_ID();
+      $slider_posts[] = [
+        //'url' => wp_get_attachment_url(get_the_ID()),
+        'image' => wp_get_attachment_url(get_the_ID()),
+        //'title' => get_the_title(),
+        'type' => get_post_type()
+      ];
+      wp_reset_postdata();
+    }
+}
+
 $links_uteis = $query_slider = new WP_Query(['post_type' => 'link', 'tag' => 'links-uteis']);
 $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_page' => 4, 'category_name' => 'etec-news']);
 ?>
@@ -54,7 +83,11 @@ $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_
             <div class="carousel-inner">
             <?php foreach($slider_posts as $id => $post): ?>
             <div class="carousel-item <?= ($id == 0) ? 'active' : '' ?>">
+                <?php if($post['type'] == 'attachment'): ?>
+                <img class="d-block w-100" src="<?= $post['image'] ?>" alt="<?= $post['title'] ?>">
+                <?php else: ?>
                 <a <?= ($post['type'] == 'link') ? 'target="__blank"' : ''?> href="<?= $post['url'] ?>"><img class="d-block w-100" src="<?= $post['image'] ?>" alt="<?= $post['title'] ?>"></a>
+                <?php endif; ?>
             </div>
             <?php endforeach ?>
             </div>

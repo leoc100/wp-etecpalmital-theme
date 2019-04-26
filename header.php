@@ -52,6 +52,7 @@
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown-noticias" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Notícias</a>
             <div class="dropdown-menu" aria-labelledby="dropdown-noticias">
+                <a class="dropdown-item" href="<?= get_category_link(get_category_by_slug('etec-news')->term_id) ?>">ETEC News</a>
                 <a class="dropdown-item" href="<?= get_category_link(get_category_by_slug('eventos')->term_id) ?>">Eventos</a>
                 <a class="dropdown-item" href="<?= get_category_link(get_category_by_slug('palestras')->term_id) ?>">Palestras</a>
                 <a class="dropdown-item" href="<?= get_category_link(get_category_by_slug('visitas-tecnicas')->term_id) ?>">Visitas Técnicas</a>
