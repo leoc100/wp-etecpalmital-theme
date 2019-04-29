@@ -3,6 +3,10 @@
     padding-bottom: 0;
 }
 
+.navbar-brand {
+    min-height: 58px;
+}
+
 @media (max-width: 1200px) {
     .btn, .btn-group {
         width:100%;

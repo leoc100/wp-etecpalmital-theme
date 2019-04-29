@@ -19,7 +19,7 @@
     </nav>
     <img class="mx-auto d-none d-lg-block d-xl-block" src="<?= get_template_directory_uri() ?>/img/header-1000.png" />
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="<?= get_home_url() ?>" aria-expanded="false"><img src="<?= get_template_directory_uri() ?>/img/logo-etec.png" height="48px" /></a>
+        <a class="navbar-brand" href="<?= get_home_url() ?>" aria-expanded="false"><img class="d-lg-none" src="<?= get_template_directory_uri() ?>/img/logo-etec.png" height="48px" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
