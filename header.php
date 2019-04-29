@@ -36,17 +36,6 @@
                     <?php wp_reset_postdata(); ?>
                     <?php endforeach ?>
                 <?php endforeach ?>
-
-                <!-- <h6 class="dropdown-header">Ensino Médio</h6>
-                <a class="dropdown-item" href="#">ETIM - Administração</a>
-                <a class="dropdown-item" href="#">ETIM - nformática para Internet</a>
-                <h6 class="dropdown-header">Ensino Técnico</h6>
-                <a class="dropdown-item" href="#">Contabilidade</a>
-                <a class="dropdown-item" href="#">Desenvolvimento de Sistemas</a>
-                <a class="dropdown-item" href="#">Enfermagem</a>
-                <a class="dropdown-item" href="#">Informática para Internet</a>
-                <a class="dropdown-item" href="#">Recursos Humanos</a>
-                <a class="dropdown-item" href="#">Serviços Jurídicos</a> -->
             </div>
             </li>
             <li class="nav-item dropdown">

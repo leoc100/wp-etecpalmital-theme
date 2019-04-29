@@ -104,29 +104,15 @@ $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_
         <div class="jumbotron text-light">
             <h1 class="text-center">Links Úteis</h1>
             <div class="container">
-            <div class="row">
-            <?php while($links_uteis->have_posts()): $links_uteis->the_post(); ?>
-                <div class="col-sm text-center">
-                    <a target="_blank" href="<?= get_post_meta(get_the_ID(), 'url', true) ?>">
-                        <img src="<?= get_the_post_thumbnail_url() ?>" />
-                    </a>
+                <div class="row">
+                <?php while($links_uteis->have_posts()): $links_uteis->the_post(); ?>
+                    <div class="col-sm text-center">
+                        <a target="_blank" href="<?= get_post_meta(get_the_ID(), 'url', true) ?>">
+                            <img src="<?= get_the_post_thumbnail_url() ?>" />
+                        </a>
+                    </div>
+                <?php wp_reset_postdata(); endwhile ?>
                 </div>
-            <?php wp_reset_postdata(); endwhile ?>
-            </div>
-                <!-- <div class="row">
-                    <div class="col-sm text-center">
-                        <img src="<?= get_template_directory_uri() ?>/img/moodle.png" />
-                    </div>
-                    <div class="col-sm text-center">
-                        <a target="_blank" href="https://nsa.cps.sp.gov.br"><img src="<?= get_template_directory_uri() ?>/img/nsa.png" /></a>
-                    </div>
-                    <div class="col-sm text-center">
-                        <a target="_blank" href="https://portal.office.com"><img src="<?= get_template_directory_uri() ?>/img/outlook.png" /></a>
-                    </div>
-                    <div class="col-sm text-center">
-                        <a target="_blank" href="https://etec.onthehub.com/"><img src="<?= get_template_directory_uri() ?>/img/imagine.png" /></a>
-                    </div>
-                </div> -->
             </div>
         </div>
         <div class="container">
@@ -143,25 +129,6 @@ $etecnews_posts = new WP_Query(['post__not_in' => $slider_fixed_ids, 'posts_per_
                     </ul>
                 </div>
                 <?php endforeach ?>
-            
-                <!-- <div class="col-sm text-center">
-                    <h2>Ensino Técnico Integrado ao Médio (Integral)</h2>
-                    <ul>
-                        <li><a href="/etim-administracao">Administração</a></li>
-                        <li><a href="/etim-informatica-para-internet">Informática para Internet</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm text-center">
-                    <h2>Ensino Técnico (Noturno)</h2>
-                    <ul>
-                        <li><a href="/contabilidade">Contabilidade<a></li>
-                        <li><a href="/desenvolvimento-de-sistemas">Desenvolvimento de Sistemas</a></li>
-                        <li><a href="/enfermagem">Enfermagem</a></li>
-                        <li><a href="/informatica-para-internet">Informática para Internet</a></li>
-                        <li><a href="/recursos-humanos">Recursos Humanos</a></li>
-                        <li><a href="/servicos-juridicos">Serviços Jurídicos</a></li>
-                    </ul>
-                </div> -->
             </div>
         </div>
         <div class="text-light bg-dark">
