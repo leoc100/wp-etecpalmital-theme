@@ -3,16 +3,16 @@
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= get_home_url() ?>">Home</a>
+                    <a class="nav-link text-danger" href="<?= get_home_url() ?>">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= get_permalink(get_page_by_path("biblioteca")) ?>">Biblioteca</a>
+                    <a class="nav-link text-danger" href="<?= get_permalink(get_page_by_path("biblioteca")) ?>">Biblioteca</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= get_permalink(get_page_by_path("equipe-escolar")) ?>">Equipe Escolar</a>
+                    <a class="nav-link text-danger" href="<?= get_permalink(get_page_by_path("equipe-escolar")) ?>">Equipe Escolar</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= get_permalink(get_page_by_path("documentos")) ?>">Documentos</a>
+                    <a class="nav-link text-danger" href="<?= get_permalink(get_page_by_path("documentos")) ?>">Documentos</a>
                 </li>
             </ul>
         </div>
