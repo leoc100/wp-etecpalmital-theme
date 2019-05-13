@@ -12,7 +12,7 @@
                     <a class="nav-link text-danger" href="<?= get_permalink(get_page_by_path("equipe-escolar")) ?>">Equipe Escolar</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-danger" href="<?= get_permalink(get_page_by_path("documentos")) ?>">Documentos</a>
+                    <a class="nav-link text-danger" href="<?= get_permalink(get_page_by_path("contatos")) ?>">Contatos</a>
                 </li>
             </ul>
         </div>
@@ -59,8 +59,17 @@
                 <a class="dropdown-item" href="<?= get_permalink(get_page_by_path("vagas-de-estagio")) ?>">Vagas de Estágio</a>
             </div>
             </li>
-            <li class="nav-item">
-            <a class="nav-link" href="<?= get_permalink(get_page_by_path("contatos")) ?>">Contatos</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown-documentos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Documentos</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown-documentos">
+                    <?php foreach(get_categories(['child_of' => get_category_by_slug('documentos')->term_id, 'hide_empty' => 0]) as $category): ?>
+                        <?php if($category->parent == get_category_by_slug('documentos')->term_id): ?>
+                        <h6 class="dropdown-header"><?= $category->name ?></h6>
+                        <?php else: ?>
+                        <a class="dropdown-item" href="<?= get_category_link($category->term_id) ?>"><?= $category->name ?></a>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                </div>
             </li>
         </ul>
 
@@ -75,7 +84,7 @@
             <a class="btn btn-outline-light" href="<?= get_permalink(get_page_by_path("equipe-escolar")) ?>">Equipe Escolar</a>&nbsp;
             </li>
             <li class="nav-item">
-            <a class="btn btn-outline-light" href="<?= get_permalink(get_page_by_path("documentos")) ?>">Documentos</a>&nbsp;
+                <a class="btn btn-outline-light" href="<?= get_permalink(get_page_by_path("contatos")) ?>">Contatos</a>&nbsp;
             </li>
         </ul>
         </div>
