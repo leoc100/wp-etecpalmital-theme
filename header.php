@@ -69,7 +69,7 @@
                             <?php if($posts->found_posts == 1): ?>
                             <a class="dropdown-item" target="__blank" href="<?= wp_get_attachment_url($posts->posts[0]->ID)?>"><?= $posts->posts[0]->post_title ?></a>
                             <?php else: ?>
-                            <a class="dropdown-item" href="<?= get_category_link($category->term_id) ?>"><?= $category->name ?> - <?= $posts->found_posts ?></a>
+                            <a class="dropdown-item" href="<?= get_category_link($category->term_id) ?>"><?= $category->name ?></a>
                             <?php endif; ?>
                         <?php endif ?>
                     <?php endforeach ?>
