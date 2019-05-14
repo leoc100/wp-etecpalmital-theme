@@ -11,16 +11,16 @@ foreach($categories as $k => $c) {
             $menu_doc[$c->name] = [];
         }
     } else {
-        $posts = get_posts(['post_type' => ['attachment', 'page'], 'post_status' => ['inherit', 'publish'], 'cat' => $c->term_id]);
-        if(count($posts) == 1) {
-            if($posts[0]->post_type == 'page') {
-                if($posts[0]->post_status == 'publish') {
-                    $menu_doc[$categories[$c->parent]->name][$posts[0]->post_title] = ['type' => 'page', 'url' => get_permalink($posts[0]->ID)];
+        $_posts = get_posts(['post_type' => ['attachment', 'page'], 'post_status' => ['inherit', 'publish'], 'cat' => $c->term_id]);
+        if(count($_posts) == 1) {
+            if($_posts[0]->post_type == 'page') {
+                if($_posts[0]->post_status == 'publish') {
+                    $menu_doc[$categories[$c->parent]->name][$_posts[0]->post_title] = ['type' => 'page', 'url' => get_permalink($_posts[0]->ID)];
                 }
             } else {
-                $menu_doc[$categories[$c->parent]->name][$posts[0]->post_title] = ['type' => 'attachment', 'url' => wp_get_attachment_url($posts[0]->ID)];
+                $menu_doc[$categories[$c->parent]->name][$_posts[0]->post_title] = ['type' => 'attachment', 'url' => wp_get_attachment_url($_posts[0]->ID)];
             }
-        } else if(count($posts) > 0) {
+        } else if(count($_posts) > 0) {
             $menu_doc[$categories[$c->parent]->name][$c->name] = ['type' => 'category', 'url' => get_category_link($c->term_id)];
         }
     }
