@@ -1,3 +1,31 @@
+<?php
+$id_main_category = get_category_by_slug('documentos')->term_id;
+$query_categories = get_categories(['child_of' => $id_main_category, 'hide_empty' => 0]);
+$categories = [];
+foreach($query_categories as $c)
+    $categories[$c->term_id] = $c;
+$menu_doc = [];
+foreach($categories as $k => $c) {
+    if($c->parent == $id_main_category) {
+        if(!array_key_exists($c->name, $menu_doc)){
+            $menu_doc[$c->name] = [];
+        }
+    } else {
+        $posts = get_posts(['post_type' => ['attachment', 'page'], 'post_status' => ['inherit', 'publish'], 'cat' => $c->term_id]);
+        if(count($posts) == 1) {
+            if($posts[0]->post_type == 'page') {
+                if($posts[0]->post_status == 'publish') {
+                    $menu_doc[$categories[$c->parent]->name][$posts[0]->post_title] = ['type' => 'page', 'url' => get_permalink($posts[0]->ID)];
+                }
+            } else {
+                $menu_doc[$categories[$c->parent]->name][$posts[0]->post_title] = ['type' => 'attachment', 'url' => wp_get_attachment_url($posts[0]->ID)];
+            }
+        } else if(count($posts) > 0) {
+            $menu_doc[$categories[$c->parent]->name][$c->name] = ['type' => 'category', 'url' => get_category_link($c->term_id)];
+        }
+    }
+}
+?>
 
     <nav class="navbar navbar-expand-lg navbar-light d-md-block">
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
@@ -62,15 +90,12 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown-documentos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Documentos</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown-documentos">
-                    <?php foreach(get_categories(['child_of' => get_category_by_slug('documentos')->term_id, 'hide_empty' => 0]) as $category): ?>
-                        <?php if($category->parent == get_category_by_slug('documentos')->term_id): ?>
-                        <h6 class="dropdown-header"><?= $category->name ?></h6>
-                        <?php else: $posts = new WP_Query(['post_type' => 'attachment', 'post_status' => 'inherit', 'cat' => $category->term_id]); ?>
-                            <?php if($posts->found_posts == 1): ?>
-                            <a class="dropdown-item" target="__blank" href="<?= wp_get_attachment_url($posts->posts[0]->ID)?>"><?= $posts->posts[0]->post_title ?></a>
-                            <?php else: ?>
-                            <a class="dropdown-item" href="<?= get_category_link($category->term_id) ?>"><?= $category->name ?></a>
-                            <?php endif; ?>
+                    <?php foreach($menu_doc as $header => $items): ?>
+                        <?php if(count($items) > 0): ?>
+                            <h6 class="dropdown-header"><?= $header ?></h6>
+                            <?php foreach($items as $l => $i): ?>
+                                <a class="dropdown-item" <?php if($i['type'] == 'attachment') echo 'target="__blank"' ?> href="<?= $i['url'] ?>"><?= $l ?></a>
+                            <?php endforeach ?>
                         <?php endif ?>
                     <?php endforeach ?>
                 </div>

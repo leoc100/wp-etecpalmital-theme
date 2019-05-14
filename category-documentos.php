@@ -2,7 +2,24 @@
 $categories_hierarchy[] = get_category(get_queried_object()->term_id);
 while($categories_hierarchy[0]->parent != 0)
     array_unshift($categories_hierarchy, get_category($categories_hierarchy[0]->parent));
-$attachments = get_posts(['category' => get_queried_object()->term_id, 'post_type' => 'attachment']);
+
+$posts_query = get_posts(['category' => get_queried_object()->term_id, 'post_status' => ['inherit', 'publish'], 'post_type' => ['attachment', 'page']]);
+$links = [];
+foreach($posts_query as $p) {
+    if($p->post_type == 'page') {
+        if($p->post_status == 'publish') {
+            $links[$p->post_title] = [
+                'type' => 'page',
+                'url' => get_permalink($p->ID)
+            ];
+        }
+    } else {
+        $links[$p->post_title] = [
+            'type' => 'attachment',
+            'url' => wp_get_attachment_url($p->ID)
+        ];
+    }
+}
 ?>
 <!doctype html>
 <html>
@@ -17,6 +34,7 @@ $attachments = get_posts(['category' => get_queried_object()->term_id, 'post_typ
     </head>
     <body>
         <?php get_header() ?>
+
         <div class="container">
         
             <h1><?php single_cat_title(); ?></h1>
@@ -29,8 +47,8 @@ $attachments = get_posts(['category' => get_queried_object()->term_id, 'post_typ
 
                 <div class="card">
                     <div class="card-body">
-                        <?php foreach($attachments as $a): ?>
-                        <a target="__blank" href="<?= wp_get_attachment_url($a->ID)?>"><?= $a->post_title ?></a>
+                        <?php foreach($links as $label => $i): ?>
+                        <p><a <?php if($i['type'] == 'attachment') echo 'target="__blank"' ?> href="<?= $i['url'] ?>"><?= $label ?></a></p>
                         <?php endforeach ?>
                     </div>
                 </div>
